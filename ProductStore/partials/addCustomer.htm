@@ -1,0 +1,145 @@
+﻿        <form name="customerForm" role="form"  ng-submit="submit()">
+        <table class="table table-bordered">
+            <tr class="well">
+                <td class="tdRight">
+                    Customer Name
+                </td>
+                <td class="tdLeft">
+                    <input type="text" class="form-control" name="name" ng-model="customer.name" placeholder="customer name"
+                        required>
+                </td>
+                <td class="tdRight">
+                    Customer DOB
+                </td>
+                <td class="tdLeft">
+                    <input type="date" class="form-control" name="dob" ng-model="customer.dob" placeholder="dd/mm/yyyy"
+                        required>
+                </td>
+            </tr>
+            <tr class="well">
+                <td class="tdRight">
+                    Customer gender
+                </td>
+                <td class="tdLeft">
+                    <input type="radio" name="gender" ng-model="customer.gender" value="male" required>
+                    Male
+                    <input type="radio" name="gender" ng-model="customer.gender" value="female" required>
+                    Female
+                </td>
+                <td class="tdRight">
+                    Customer Address
+                </td>
+                <td class="tdLeft">
+                    <textarea name="address" ng-model="customer.address" placeholder="customer address"
+                        cols="90" rows="2" required></textarea>
+                </td>
+            </tr>
+            <tr class="well">
+                <td class="tdRight">
+                    Customer Email
+                </td>
+                <td class="tdLeft">
+                    <input type="email" class="form-control" name="email" ng-model="customer.email" placeholder="customer email"
+                        required ng-pattern="/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i">
+                </td>
+                <td class="tdRight">
+                    Customer Phone
+                </td>
+                <td class="tdLeft">
+                    <input type="number" class="form-control" name="phone" ng-model="customer.phone"
+                        placeholder="customer phone" required ng-pattern="/^[789]\d{9}$/">
+                </td>
+            </tr>
+
+            <tr class="well">
+                <td class="tdRight">
+                    Hobbies:
+                </td>
+                <td class="tdLeft" >
+                   <label ng-repeat="hobbie in hobbies">
+                                <input type="checkbox" name="hobbie" checklist-model="customer.hobbies" checklist-value="hobbie"  >
+                                {{hobbie.value}}
+                            </label>
+                </td>
+                   <td class="tdRight">
+                    Country :
+                </td>
+                <td class="tdLeft" >
+                 <select ng-model="customer.country" ng-options="c.country as c.country for c in countries" >  <!--ng-change="getCountryStates()"-->
+                                <option ng-disabled="true"  value="">-- Select Country --</option>
+                            </select>
+                </td>
+            </tr>
+           <tr class="well">
+                <td class="tdRight">
+                   State :
+                </td>
+                <td class="tdLeft" >
+                  <select ng-model="customer.state" ng-options="c.state as c.state for c in states | filter:{country:customer.country} " >
+                               <!-- ng-options="c.state  for c in states"   ng-change="getStateCities()"-->
+                                <option ng-disabled="true"  value="">-- Select State --</option>
+                            </select>
+                </td>
+                  <td class="tdRight">
+                   City :
+                </td>
+                <td class="tdLeft" c>
+                  <select ng-model="customer.city" ng-options="c.city as c.city for c in cities | filter:{state:customer.state}" >
+                               <option ng-disabled="true"   value="">-- Select City --</option>
+                            </select>
+                </td>
+            </tr>  
+          
+            <tr class="well">
+                <td colspan="4" class="tdCenter">
+                    <button type="submit" ng-disabled="customerForm.$invalid" class="btn btn-primary">
+                        {{buttonName}}</button>
+                    <button type="button" class="btn btn-primary"  ng-click="cancel()">
+                        Cancel</button>
+                </td>
+            </tr>
+        </table>
+        </form>
+        <h3 ng-if="customers!=''">List of Customers :</h3>
+        <table class="table table-bordered" ng-if="customers!=''">
+            <tr class="well">
+               <th align="center"> Name
+                </th>
+                <th align="center">
+                    DOB
+                </th>
+                <th align="center">
+                    Email Id
+                </th>
+                <th align="center">
+                    Mobile No
+                </th>
+    
+                <th width="5%" align="center">
+                    Update
+                </th>
+                <th width="5%" align="center">
+                    Delete
+                </th>
+            </tr>
+             <tr class="well" ng-repeat="customer in customers">
+             <td class="tdCenter">
+                   {{customer.name}}
+                </td>
+                 <td class="tdCenter">
+                   {{customer.dob | date:'dd/MM/yyyy'}}
+                </td>
+                 <td class="tdCenter">
+                   {{customer.email}}
+                </td>
+                 <td class="tdCenter">
+                   {{customer.phone}}
+                </td>
+                  <td class="tdCenter">
+                   <input type="button" ng-click="getCustomerById(customer)" value="update">
+                </td>
+                  <td class="tdCenter">
+                  <input type="button" ng-click="deleteCustomer(customer._id.$oid)" value="delete">
+                </td>
+             </tr>
+            </table>

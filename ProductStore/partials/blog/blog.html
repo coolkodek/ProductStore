@@ -1,0 +1,53 @@
+﻿   <style>
+       input, textarea, .uneditable-input {
+    width: 700px;
+   }
+            h4 {
+    cursor:pointer;
+  }
+   </style>
+        <!--    read more:  &rarr;-->
+      <table class="table table-bordered">
+           <tr class="well">
+               <td class="tdCenter">Title</td>  <td class="tdCenter">Content</td>    <td class="tdCenter">Created On</td> <td class="tdCenter">comments</td> <td class="tdCenter">Likes</td>
+           </tr>
+          <tr class="well" ng-repeat="post in posts">
+               <td class="tdCenter">
+                  <span ng-click="showPost(post)"><h4 style="color:blue">{{post.title}}</h4> </span>
+                </td>
+              <td class="tdCenter">{{post.body | limitTo:40}}...</td>
+              <td class="tdCenter">{{post.createdOn}}</td>
+              <td class="tdCenter"> <p class="fa fa-comment ">{{post.comments.length}}</p></td>
+              <td class="tdCenter"> <p class="fa fa-heart"> {{post.likes}}</p></td>
+
+          </tr>
+          </table>
+        
+      <div class="wall" ng-show="isPostShow===1">  
+                        <h2>{{postDetails.title}}</h2>
+                       <!-- <img src="{{postDetails.image}}" ng-show="{{postDetails.image}}" />-->
+                        <cite>by {{postDetails.author}} on {{postDetails.createdOn | date}}</cite>
+                        <div class="post-body">
+                            {{ postDetails.body }}
+                        </div>
+
+                        <div class="comments" ng-controller="CommentController as commentCtrl">
+                            <button class="fa fa-heart " ng-click="postDetails.likes = postDetails.likes+1"> {{ postDetails.likes}}</button>
+                            <h3>Comments</h3>
+                            <ul>
+                                <li ng-repeat="comment in postDetails.comments">"{{comment.body}}"
+                                <cite>- by <b>{{comment.author}}</b> on <b> {{comment.createdOn}}</b></cite>
+                                </li>
+                            </ul>
+                            <form name="commentForm" ng-submit="syncComment()" novalidate>
+                                <h4>Add Comment</h4>
+                                <textarea ng-model="comment.body" cols="30" rows="5" required></textarea>
+                                <label for="">by:</label>
+                                <input type="text" ng-model="comment.author" required placeholder="Name" />
+                                            <br />
+                                <input type="button" value="add Comment" ng-disabled="commentForm.$invalid" ng-click="addComment(postDetails)" class="btn btn-primary"/>  &nbsp;  &nbsp;&nbsp;
+                                 <input type="submit" value="Sync Blog"  class="btn btn-primary"/>    &nbsp;&nbsp;&nbsp;
+                                 <input type="button" value="Reset"  class="btn btn-primary" ng-click="resetComment()"/>
+                            </form>
+                        </div>
+                 </div>

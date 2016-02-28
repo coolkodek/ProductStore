@@ -1,0 +1,89 @@
+﻿        <form name="ProductForm" role="form"  ng-submit="submit()">
+        <table class="table table-bordered">
+            <tr class="well">
+                <td class="tdRight">
+                    Product Name
+                </td>
+                <td class="tdLeft">
+                    <input type="text" class="form-control" name="name" ng-model="product.name" placeholder="customer name"
+                        required>
+                </td>
+                <td class="tdRight">
+                    description
+                </td>
+                <td class="tdLeft">
+                 <textarea name="address" ng-model="product.description" placeholder="product discription"
+                        cols="90" rows="2" required></textarea>
+                </td>
+            </tr>
+            <tr class="well">
+                <td class="tdRight">
+                   Price
+                </td>
+                <td class="tdLeft">
+                   <input type="number" class="form-control" name="name" ng-model="product.price" placeholder="product price"
+                        required>
+                </td>
+                <td class="tdRight">
+                    Quantity
+                </td>
+                <td class="tdLeft">
+                    <input type="number" class="form-control" name="name" ng-model="product.quantity" placeholder="product quantity"
+                        required>
+                </td>
+            </tr>
+          
+            <tr class="well">
+                <td colspan="4" class="tdCenter">
+                    <button type="submit" ng-disabled="ProductForm.$invalid" class="btn btn-primary">
+                       {{buttonName}}</button>
+                    <button type="button" class="btn btn-primary" ng-click="cancel()">
+                        Cancel</button>
+                </td>
+            </tr>
+        </table>
+        </form>
+        <h3 ng-if="products!=''">List of Products :</h3>
+        <table class="table table-bordered" ng-if="products!=''">
+            <tr class="well">
+               <th align="center"> Name
+                </th>
+                <th align="center">
+                    Description
+                </th>
+                <th align="center">
+                    Price
+                </th>
+                <th align="center">
+                   Quantity
+                </th>
+    
+                <th width="5%" align="center">
+                    Update
+                </th>
+                <th width="5%" align="center">
+                    Delete
+                </th>
+            </tr>
+             <tr class="well" ng-repeat="product in products">
+             <td class="tdCenter">
+                   {{product.name}}
+                </td>
+                 <td class="tdCenter">
+                   {{product.description}}
+                </td>
+                 <td class="tdCenter">
+                   {{product.price}}
+                </td>
+                 <td class="tdCenter">
+                   {{product.quantity}}
+                </td>
+                  <td class="tdCenter">
+                   <input type="button" ng-click="getProductById(product)" value="update">
+                </td>
+                  <td class="tdCenter">
+                  <input type="button" ng-click="deleteProduct(product._id.$oid)" value="delete">
+                </td>
+             </tr>
+            </table>
+   

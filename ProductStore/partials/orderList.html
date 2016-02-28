@@ -1,0 +1,77 @@
+﻿<style>
+    input, textarea, .uneditable-input {
+        width: 700px;
+    }
+
+    h4 {
+        cursor: pointer;
+    }
+</style>
+
+
+<table class="table table-bordered" ng-repeat="order in orders | orderBy:'-orderDateTime'">
+
+    <tr class="well">
+        <td class="tdCenter" width="50%" colspan="2"><b>Customer Detial</b></td>
+        <td class="tdRight"><b>Order Details <font color="Blue">      &nbsp; &nbsp;&nbsp; Order Date : 
+            <font color="Green">{{ order.orderDateTime |  date:'medium'}}</font></font></b>
+            &nbsp;&nbsp;&nbsp;&nbsp; <a href="" ng-click="deleteOrder(order._id.$oid)"><i class="fa fa-trash-o fa-2x"></i></a>
+        </td>
+    </tr>
+
+    <tr class="well">
+        <td class="tdRight" width="15%"><b>Customer Name</b></td>
+        <td class="tdLeft">{{order.customerName}}</td>
+        <td class="tdCenter" rowspan="4">
+              <table class="table table-bordered">
+                   <tr class="well">
+                    <td><b>Item</b></td>
+                    <td class="tdCenter"><b>Quantity</b></td>
+                    <td class="tdRight"><b>Price</b></td>
+                </tr>
+                 <tr ng-repeat="item in order.item | orderBy:'name'">
+                    <td>{{item.name}}</td>
+                     <td class="tdCenter">{{item.quantity}}</td>
+                     <td>{{"Rs. " + item.price * item.quantity }}</td>
+                 </tr>
+                  <tr class="well">
+                    <td><b>Total</b></td>
+                    <td class="tdCenter"><b>{{order.totalItemCount}}</b></td>
+                    <td class="tdRight"><b>{{"Rs. " + order.totalPrice}}</b></td>
+                    
+                </tr>
+              </table>
+        </td>
+    </tr>
+     <tr class="well">
+        <td class="tdRight"><b>address</b></td>
+        <td class="tdLeft">{{order.address}}</td>
+    </tr>
+      <tr class="well">
+        <td class="tdRight"><b>Mobile No</b></td>
+        <td class="tdLeft">{{order.phone}}</td>
+    </tr>
+      <tr class="well">
+        <td class="tdRight"><b>Email Id</b></td>
+        <td class="tdLeft">{{order.email}}</td>
+    </tr>
+
+
+
+    <tr class="well" ng-repeat="post in posts">
+        <td class="tdCenter">
+            <span ng-click="showPost(post)">
+                <h4 style="color: blue">{{post.title}}</h4>
+            </span>
+        </td>
+        <td class="tdCenter">{{post.body | limitTo:40}}...</td>
+        <td class="tdCenter">{{post.createdOn}}</td>
+        <td class="tdCenter">
+            <p class="fa fa-comment ">{{post.comments.length}}</p>
+        </td>
+        <td class="tdCenter">
+            <p class="fa fa-heart">{{post.likes}}</p>
+        </td>
+
+    </tr>
+</table>
